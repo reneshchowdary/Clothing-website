@@ -8,11 +8,15 @@ import Breadcrumb from '../../components/Breadcrumb'
 import Footer from '../../components/Footer'
 import ProductCard from '../../components/ProductCard'
 import { products } from '../../data/products'
+import { useCart } from '../../context/CartContext'
 
 export default function ProductPage() {
   const router = useRouter()
   const { slug } = router.query
   const [selectedSize, setSelectedSize] = useState<string>('')
+  const [quantity, setQuantity] = useState<number>(1)
+  const [addedToCart, setAddedToCart] = useState<boolean>(false)
+  const { addToCart } = useCart()
 
   // Find the product by slug
   const product = slug ? products.find(p => p.slug === slug) : null
@@ -55,6 +59,30 @@ export default function ProductPage() {
   const relatedProducts = products
     .filter(p => p.category === product.category && p.id !== product.id)
     .slice(0, 4)
+
+  const handleAddToCart = () => {
+    if (!selectedSize && product.sizes.length > 0) {
+      alert('Please select a size')
+      return
+    }
+    const size = selectedSize || product.sizes[0] || 'One Size'
+    addToCart(product, size, quantity)
+    setAddedToCart(true)
+    setTimeout(() => setAddedToCart(false), 2000)
+  }
+
+  const handleBuyNow = () => {
+    if (!selectedSize && product.sizes.length > 0) {
+      alert('Please select a size')
+      return
+    }
+    const size = selectedSize || product.sizes[0] || 'One Size'
+    addToCart(product, size, quantity)
+    router.push('/checkout')
+  }
+
+  const incrementQuantity = () => setQuantity(prev => prev + 1)
+  const decrementQuantity = () => setQuantity(prev => Math.max(1, prev - 1))
 
   return (
     <>
@@ -133,11 +161,45 @@ export default function ProductPage() {
                 </div>
               </div>
 
+              {/* Quantity Selector */}
+              <div className="mb-6">
+                <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider mb-3">Quantity</h3>
+                <div className="flex items-center gap-4">
+                  <div className="flex items-center border-2 border-gray-300">
+                    <button
+                      onClick={decrementQuantity}
+                      className="w-10 h-10 flex items-center justify-center hover:bg-gray-100 transition-colors font-semibold"
+                    >
+                      −
+                    </button>
+                    <span className="w-12 h-10 flex items-center justify-center border-x-2 border-gray-300 font-semibold">
+                      {quantity}
+                    </span>
+                    <button
+                      onClick={incrementQuantity}
+                      className="w-10 h-10 flex items-center justify-center hover:bg-gray-100 transition-colors font-semibold"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+              </div>
+
               <div className="space-y-3 mb-8">
-                <button className="w-full bg-primary text-white py-4 font-semibold uppercase tracking-wide hover:bg-primary-dark transition-colors">
-                  Add to Cart
+                <button
+                  onClick={handleAddToCart}
+                  className={`w-full py-4 font-semibold uppercase tracking-wide transition-colors ${
+                    addedToCart
+                      ? 'bg-green-600 text-white'
+                      : 'bg-primary text-white hover:bg-primary-dark'
+                  }`}
+                >
+                  {addedToCart ? '✓ Added to Cart' : 'Add to Cart'}
                 </button>
-                <button className="w-full border-2 border-primary text-primary py-4 font-semibold uppercase tracking-wide hover:bg-primary hover:text-white transition-colors">
+                <button
+                  onClick={handleBuyNow}
+                  className="w-full border-2 border-primary text-primary py-4 font-semibold uppercase tracking-wide hover:bg-primary hover:text-white transition-colors"
+                >
                   Buy Now
                 </button>
               </div>

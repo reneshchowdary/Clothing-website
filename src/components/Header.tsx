@@ -1,10 +1,13 @@
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { FiSearch, FiHeart, FiShoppingBag, FiUser } from 'react-icons/fi'
+import { useCart } from '../context/CartContext'
 
 export default function Header() {
   const [isSticky, setIsSticky] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const { getCartCount } = useCart()
+  const cartCount = getCartCount()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -41,14 +44,18 @@ export default function Header() {
             <button className="text-gray-800 hover:text-primary transition-colors hidden sm:block" aria-label="Account">
               <FiUser size={20} strokeWidth={1.5} />
             </button>
-            <button className="text-gray-800 hover:text-primary transition-colors relative" aria-label="Wishlist">
+            <Link href="/wishlist" className="text-gray-800 hover:text-primary transition-colors relative" aria-label="Wishlist">
               <FiHeart size={20} strokeWidth={1.5} />
               <span className="absolute -top-2 -right-2 bg-primary text-white text-[10px] font-medium rounded-full h-4 w-4 flex items-center justify-center">0</span>
-            </button>
-            <button className="text-gray-800 hover:text-primary transition-colors relative" aria-label="Cart">
+            </Link>
+            <Link href="/cart" className="text-gray-800 hover:text-primary transition-colors relative" aria-label="Cart">
               <FiShoppingBag size={20} strokeWidth={1.5} />
-              <span className="absolute -top-2 -right-2 bg-primary text-white text-[10px] font-medium rounded-full h-4 w-4 flex items-center justify-center">0</span>
-            </button>
+              {cartCount > 0 && (
+                <span className="absolute -top-2 -right-2 bg-primary text-white text-[10px] font-medium rounded-full h-4 w-4 flex items-center justify-center">
+                  {cartCount}
+                </span>
+              )}
+            </Link>
 
             {/* Mobile menu button */}
             <button

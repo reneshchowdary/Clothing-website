@@ -1,7 +1,8 @@
 import Link from 'next/link'
 import { useState } from 'react'
-import { FiHeart } from 'react-icons/fi'
+import { FiHeart, FiShoppingBag } from 'react-icons/fi'
 import { Product } from '../data/products'
+import { useCart } from '../context/CartContext'
 
 interface ProductCardProps {
   product: Product
@@ -9,10 +10,33 @@ interface ProductCardProps {
 
 export default function ProductCard({ product }: ProductCardProps) {
   const [isWishlisted, setIsWishlisted] = useState<boolean>(false)
+  const [showSizeSelector, setShowSizeSelector] = useState<boolean>(false)
+  const { addToCart } = useCart()
 
   const toggleWishlist = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     setIsWishlisted(!isWishlisted)
+  }
+
+  const handleAddToCart = (e: React.MouseEvent<HTMLButtonElement>, size?: string) => {
+    e.preventDefault()
+    if (!size && product.sizes.length > 0) {
+      setShowSizeSelector(true)
+      return
+    }
+    const selectedSize = size || product.sizes[0] || 'One Size'
+    addToCart(product, selectedSize, 1)
+    setShowSizeSelector(false)
+    
+    // Show brief success feedback
+    const button = e.currentTarget
+    const originalText = button.textContent
+    button.textContent = 'Added!'
+    button.classList.add('bg-green-600')
+    setTimeout(() => {
+      button.textContent = originalText
+      button.classList.remove('bg-green-600')
+    }, 1000)
   }
 
   return (
@@ -49,7 +73,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         )}
       </div>
 
-      <div className="pt-3 pb-2">
+      <div className="pt-3 pb-4">
         <h3 className="text-sm text-gray-900 mb-1.5 line-clamp-2 leading-snug">
           <Link href={`/product/${product.slug}`} className="hover:text-primary transition-colors">
             {product.title}
@@ -65,6 +89,38 @@ export default function ProductCard({ product }: ProductCardProps) {
             </>
           )}
         </div>
+
+        {/* Add to Cart Button - Always visible */}
+        {showSizeSelector ? (
+          <div className="mt-3 space-y-2">
+            <p className="text-xs font-semibold text-gray-700 mb-1">Select Size:</p>
+            <div className="flex flex-wrap gap-2">
+              {product.sizes.map(size => (
+                <button
+                  key={size}
+                  onClick={(e) => handleAddToCart(e, size)}
+                  className="px-3 py-1.5 border border-gray-300 hover:border-primary hover:bg-primary hover:text-white text-xs font-medium transition-colors"
+                >
+                  {size}
+                </button>
+              ))}
+            </div>
+            <button
+              onClick={() => setShowSizeSelector(false)}
+              className="text-xs text-gray-500 hover:text-gray-700 underline"
+            >
+              Cancel
+            </button>
+          </div>
+        ) : (
+          <button
+            onClick={handleAddToCart}
+            className="mt-3 w-full bg-primary text-white py-2.5 text-sm font-semibold uppercase tracking-wide hover:bg-primary-dark transition-colors flex items-center justify-center gap-2"
+          >
+            <FiShoppingBag size={16} />
+            Add to Cart
+          </button>
+        )}
       </div>
     </div>
   )
