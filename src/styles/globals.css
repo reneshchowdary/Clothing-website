@@ -1,0 +1,118 @@
+@import "tailwindcss";
+
+/* Custom styles */
+@layer components {
+  /* Header */
+  .header {
+    transition: all 0.3s ease;
+  }
+
+  /* Product card */
+  .product-card {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Price slider */
+  .price-slider {
+    -webkit-appearance: none;
+    height: 5px;
+    background: linear-gradient(to right, #e5e7eb 0%, #e5e7eb 100%);
+    border-radius: 3px;
+    outline: none;
+  }
+
+  .price-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    background: #8B1538;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease;
+  }
+
+  .price-slider::-webkit-slider-thumb:hover {
+    background: #6D0F2A;
+    transform: scale(1.1);
+  }
+
+  .price-slider::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    background: #8B1538;
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Sort dropdown */
+  .sort-dropdown {
+    min-width: 200px;
+  }
+
+  /* Pagination */
+  .pagination {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 48px;
+  }
+
+  .pagination button {
+    padding: 10px 16px;
+    border: 1px solid #e5e7eb;
+    background: white;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+
+  .pagination button:hover {
+    background: #f9fafb;
+    border-color: #d1d5db;
+  }
+
+  .pagination button.active {
+    background: #8B1538;
+    color: white;
+    border-color: #8B1538;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f3f4f6;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #9ca3af;
+  border-radius: 5px;
+  transition: background 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #6b7280;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Focus styles */
+*:focus-visible {
+  outline: 2px solid #8B1538;
+  outline-offset: 2px;
+}
+
+/* Made with Bob */
