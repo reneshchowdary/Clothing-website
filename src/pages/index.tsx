@@ -3,38 +3,175 @@ import Link from 'next/link'
 import AnnouncementBar from '../components/AnnouncementBar'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
+import ProductCard from '../components/ProductCard'
+import { products } from '../data/products'
 
 export default function Home() {
+  // Get featured products (first 8 products)
+  const featuredProducts = products.slice(0, 8)
+  
+  // Get new arrivals
+  const newArrivals = products.filter(p => p.isNew).slice(0, 4)
+
   return (
     <>
       <Head>
         <title>Libra - Women's Fashion & Dresses</title>
-        <meta name="description" content="Discover the latest collection of women's dresses at Libra" />
+        <meta name="description" content="Discover the latest collection of women's dresses at Libra. Where trend meets tradition." />
       </Head>
 
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-white">
         <AnnouncementBar />
         <Header />
 
-        <main className="container mx-auto px-4 py-12">
-          <h1 className="text-4xl font-bold text-primary mb-8">Welcome to Libra</h1>
-          <p className="text-lg mb-8">Discover our collection of beautiful dresses for every occasion.</p>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <Link
-              href="/collections/dresses"
-              className="block bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
-            >
-              <div className="h-64 bg-gray-200 flex items-center justify-center">
-                <span className="text-gray-500">Dresses Collection</span>
+        {/* Hero Section */}
+        <section className="relative bg-gradient-to-r from-pink-50 to-purple-50 py-20 lg:py-32">
+          <div className="container mx-auto px-6 lg:px-8">
+            <div className="max-w-3xl">
+              <h1 className="text-4xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+                Where Trend Meets Tradition
+              </h1>
+              <p className="text-lg lg:text-xl text-gray-700 mb-8 leading-relaxed">
+                Discover Libra's exquisite collection of women's fashion. From elegant dresses to ethnic wear, find your perfect style.
+              </p>
+              <div className="flex flex-wrap gap-4">
+                <Link
+                  href="/collections/new"
+                  className="bg-primary text-white px-8 py-3 font-semibold uppercase tracking-wide hover:bg-primary-dark transition-colors"
+                >
+                  Shop New Arrivals
+                </Link>
+                <Link
+                  href="/collections/sale"
+                  className="border-2 border-primary text-primary px-8 py-3 font-semibold uppercase tracking-wide hover:bg-primary hover:text-white transition-colors"
+                >
+                  View Sale
+                </Link>
               </div>
-              <div className="p-6">
-                <h2 className="text-xl font-semibold text-gray-800">Shop Dresses</h2>
-                <p className="text-gray-600 mt-2">Explore our latest collection of dresses</p>
-              </div>
-            </Link>
+            </div>
           </div>
-        </main>
+        </section>
+
+        {/* Featured Categories */}
+        <section className="py-16 lg:py-24">
+          <div className="container mx-auto px-6 lg:px-8">
+            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-12 text-center">Shop By Category</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <Link
+                href="/collections/dresses"
+                className="group relative overflow-hidden bg-gray-100 aspect-[3/4] hover:shadow-lg transition-shadow"
+              >
+                <img
+                  src="/images/products/dress1.jpg"
+                  alt="Dresses"
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
+                  <div className="p-6 text-white">
+                    <h3 className="text-2xl font-bold mb-2">Dresses</h3>
+                    <p className="text-sm">Explore Collection →</p>
+                  </div>
+                </div>
+              </Link>
+
+              <Link
+                href="/collections/new"
+                className="group relative overflow-hidden bg-gray-100 aspect-[3/4] hover:shadow-lg transition-shadow"
+              >
+                <img
+                  src="/images/products/dress2.jpg"
+                  alt="New Arrivals"
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
+                  <div className="p-6 text-white">
+                    <h3 className="text-2xl font-bold mb-2">New Arrivals</h3>
+                    <p className="text-sm">Shop Now →</p>
+                  </div>
+                </div>
+              </Link>
+
+              <Link
+                href="/collections/ethnic"
+                className="group relative overflow-hidden bg-gray-100 aspect-[3/4] hover:shadow-lg transition-shadow"
+              >
+                <img
+                  src="/images/products/dress8.jpg"
+                  alt="Ethnic Wear"
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
+                  <div className="p-6 text-white">
+                    <h3 className="text-2xl font-bold mb-2">Ethnic Wear</h3>
+                    <p className="text-sm">Discover More →</p>
+                  </div>
+                </div>
+              </Link>
+
+              <Link
+                href="/collections/sale"
+                className="group relative overflow-hidden bg-gray-100 aspect-[3/4] hover:shadow-lg transition-shadow"
+              >
+                <img
+                  src="/images/products/dress4.jpg"
+                  alt="Sale"
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
+                  <div className="p-6 text-white">
+                    <h3 className="text-2xl font-bold mb-2">Sale</h3>
+                    <p className="text-sm">Save Big →</p>
+                  </div>
+                </div>
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* Featured Products */}
+        <section className="py-16 lg:py-24 bg-gray-50">
+          <div className="container mx-auto px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">Featured Products</h2>
+              <p className="text-gray-700 max-w-2xl mx-auto">
+                Handpicked styles just for you. Explore our curated collection of trending fashion.
+              </p>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5 lg:gap-6">
+              {featuredProducts.map(product => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
+            <div className="text-center mt-12">
+              <Link
+                href="/collections/dresses"
+                className="inline-block bg-primary text-white px-8 py-3 font-semibold uppercase tracking-wide hover:bg-primary-dark transition-colors"
+              >
+                View All Products
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* Newsletter Section */}
+        <section className="py-16 lg:py-24 bg-primary text-white">
+          <div className="container mx-auto px-6 lg:px-8 text-center">
+            <h2 className="text-3xl lg:text-4xl font-bold mb-4">Stay Updated</h2>
+            <p className="text-lg mb-8 max-w-2xl mx-auto opacity-90">
+              Subscribe to our newsletter and be the first to know about new arrivals, exclusive offers, and style tips.
+            </p>
+            <div className="max-w-md mx-auto flex flex-col sm:flex-row gap-3">
+              <input
+                type="email"
+                placeholder="Enter your email"
+                className="flex-1 px-4 py-3 text-gray-900 focus:outline-none focus:ring-2 focus:ring-white"
+              />
+              <button className="bg-white text-primary px-8 py-3 font-semibold uppercase tracking-wide hover:bg-gray-100 transition-colors whitespace-nowrap">
+                Subscribe
+              </button>
+            </div>
+          </div>
+        </section>
 
         <Footer />
       </div>

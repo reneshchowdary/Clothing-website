@@ -1,38 +1,60 @@
 import Head from 'next/head'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { useState } from 'react'
 import AnnouncementBar from '../../components/AnnouncementBar'
 import Header from '../../components/Header'
+import Breadcrumb from '../../components/Breadcrumb'
 import Footer from '../../components/Footer'
+import ProductCard from '../../components/ProductCard'
 import { products } from '../../data/products'
 
 export default function ProductPage() {
   const router = useRouter()
   const { slug } = router.query
-
-  // Handle loading state
-  if (router.isFallback || !slug) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-gray-600">Loading...</div>
-      </div>
-    )
-  }
+  const [selectedSize, setSelectedSize] = useState<string>('')
 
   // Find the product by slug
-  const product = products.find(p => p.slug === slug)
+  const product = slug ? products.find(p => p.slug === slug) : null
 
-  if (!product) {
+  // Show not found if product doesn't exist and slug is loaded
+  if (slug && !product) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-800 mb-4">Product not found</h1>
-          <a href="/collections/dresses" className="text-primary hover:underline">
-            Back to collections
-          </a>
+      <>
+        <Head>
+          <title>Product Not Found - Libra</title>
+        </Head>
+        <div className="min-h-screen bg-white">
+          <AnnouncementBar />
+          <Header />
+          <div className="container mx-auto px-6 lg:px-8 py-24 text-center">
+            <h1 className="text-3xl font-bold text-gray-900 mb-4">Product Not Found</h1>
+            <p className="text-gray-600 mb-8">Sorry, we couldn't find the product you're looking for.</p>
+            <Link href="/collections/dresses" className="text-primary hover:underline font-medium">
+              ← Back to Collections
+            </Link>
+          </div>
+          <Footer />
         </div>
-      </div>
+      </>
     )
   }
+
+  // Show loading only if slug is not yet available
+  if (!slug || !product) {
+    return null
+  }
+
+  const breadcrumbItems = [
+    { name: 'Home', href: '/' },
+    { name: 'Products', href: '/collections/dresses' },
+    { name: product.title }
+  ]
+
+  // Get related products (same category, different product)
+  const relatedProducts = products
+    .filter(p => p.category === product.category && p.id !== product.id)
+    .slice(0, 4)
 
   return (
     <>
@@ -41,42 +63,69 @@ export default function ProductPage() {
         <meta name="description" content={product.title} />
       </Head>
 
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-white">
         <AnnouncementBar />
         <Header />
 
-        <div className="container mx-auto px-4 py-12">
-          <div className="grid md:grid-cols-2 gap-12">
+        <div className="container mx-auto px-6 lg:px-8 py-8">
+          <Breadcrumb items={breadcrumbItems} />
+
+          <div className="grid lg:grid-cols-2 gap-12 mt-8">
             {/* Product Image */}
-            <div className="bg-white p-6 rounded-lg shadow-sm">
-              <img
-                src={product.image}
-                alt={product.title}
-                className="w-full h-auto object-cover"
-              />
+            <div className="bg-gray-50">
+              <div className="aspect-[3/4] relative">
+                <img
+                  src={product.image}
+                  alt={product.title}
+                  className="w-full h-full object-cover"
+                />
+                {product.isNew && (
+                  <span className="absolute top-4 left-4 bg-black text-white px-3 py-1 text-xs font-semibold uppercase tracking-wider">
+                    NEW
+                  </span>
+                )}
+              </div>
             </div>
 
             {/* Product Details */}
-            <div className="bg-white p-6 rounded-lg shadow-sm">
-              <h1 className="text-2xl font-bold text-gray-800 mb-2">{product.title}</h1>
+            <div className="flex flex-col">
+              <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">{product.title}</h1>
 
-              <div className="flex items-center mb-4">
-                <span className="text-2xl font-semibold text-gray-900">₹{product.price.toLocaleString()}</span>
+              <div className="flex items-baseline gap-3 mb-6">
+                <span className="text-3xl font-bold text-gray-900">₹{product.price.toLocaleString()}</span>
                 {product.originalPrice && (
                   <>
-                    <span className="mx-3 text-gray-500 line-through">₹{product.originalPrice.toLocaleString()}</span>
-                    <span className="text-accent font-medium">{product.discount}% OFF</span>
+                    <span className="text-xl text-gray-400 line-through">₹{product.originalPrice.toLocaleString()}</span>
+                    <span className="text-sm font-semibold text-red-600 bg-red-50 px-2 py-1">
+                      {product.discount}% OFF
+                    </span>
                   </>
                 )}
               </div>
 
-              <div className="mb-6">
-                <h3 className="text-sm font-medium text-gray-700 mb-2">SELECT SIZE</h3>
-                <div className="flex space-x-3">
+              {product.rating && (
+                <div className="flex items-center gap-2 mb-6">
+                  <div className="flex text-yellow-400">
+                    {'★'.repeat(Math.floor(product.rating))}{'☆'.repeat(5 - Math.floor(product.rating))}
+                  </div>
+                  <span className="text-sm text-gray-600">
+                    {product.rating} ({product.reviews} reviews)
+                  </span>
+                </div>
+              )}
+
+              <div className="mb-8">
+                <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider mb-3">Select Size</h3>
+                <div className="flex flex-wrap gap-3">
                   {product.sizes.map(size => (
                     <button
                       key={size}
-                      className="w-10 h-10 border border-gray-300 rounded-md flex items-center justify-center hover:border-primary transition-colors"
+                      onClick={() => setSelectedSize(size)}
+                      className={`w-12 h-12 border-2 flex items-center justify-center font-semibold transition-colors ${
+                        selectedSize === size
+                          ? 'border-primary bg-primary text-white'
+                          : 'border-gray-300 hover:border-primary'
+                      }`}
                     >
                       {size}
                     </button>
@@ -84,28 +133,58 @@ export default function ProductPage() {
                 </div>
               </div>
 
-              <div className="space-y-4">
-                <button className="w-full bg-primary text-white py-3 rounded-md hover:bg-opacity-90 transition-colors">
-                  ADD TO CART
+              <div className="space-y-3 mb-8">
+                <button className="w-full bg-primary text-white py-4 font-semibold uppercase tracking-wide hover:bg-primary-dark transition-colors">
+                  Add to Cart
                 </button>
-                <button className="w-full border border-primary text-primary py-3 rounded-md hover:bg-primary hover:text-white transition-colors">
-                  BUY NOW
+                <button className="w-full border-2 border-primary text-primary py-4 font-semibold uppercase tracking-wide hover:bg-primary hover:text-white transition-colors">
+                  Buy Now
                 </button>
               </div>
 
-              <div className="mt-8">
-                <h3 className="text-sm font-medium text-gray-700 mb-2">PRODUCT DETAILS</h3>
-                <ul className="space-y-2 text-sm text-gray-600">
-                  <li><strong>Fabric:</strong> {product.fabric.join(', ')}</li>
-                  <li><strong>Occasion:</strong> {product.occasion.join(', ')}</li>
-                  <li><strong>Pattern:</strong> {product.pattern.join(', ')}</li>
-                  <li><strong>Style:</strong> {product.style.join(', ')}</li>
-                  <li><strong>Sleeve Length:</strong> {product.sleeveLength}</li>
-                  <li><strong>Neck:</strong> {product.neck}</li>
-                </ul>
+              <div className="border-t border-gray-200 pt-8">
+                <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider mb-4">Product Details</h3>
+                <dl className="space-y-3 text-sm">
+                  <div className="flex">
+                    <dt className="font-semibold text-gray-700 w-32">Fabric:</dt>
+                    <dd className="text-gray-600">{product.fabric.join(', ')}</dd>
+                  </div>
+                  <div className="flex">
+                    <dt className="font-semibold text-gray-700 w-32">Occasion:</dt>
+                    <dd className="text-gray-600">{product.occasion.join(', ')}</dd>
+                  </div>
+                  <div className="flex">
+                    <dt className="font-semibold text-gray-700 w-32">Pattern:</dt>
+                    <dd className="text-gray-600">{product.pattern.join(', ')}</dd>
+                  </div>
+                  <div className="flex">
+                    <dt className="font-semibold text-gray-700 w-32">Style:</dt>
+                    <dd className="text-gray-600">{product.style.join(', ')}</dd>
+                  </div>
+                  <div className="flex">
+                    <dt className="font-semibold text-gray-700 w-32">Sleeve:</dt>
+                    <dd className="text-gray-600">{product.sleeveLength}</dd>
+                  </div>
+                  <div className="flex">
+                    <dt className="font-semibold text-gray-700 w-32">Neck:</dt>
+                    <dd className="text-gray-600">{product.neck}</dd>
+                  </div>
+                </dl>
               </div>
             </div>
           </div>
+
+          {/* Related Products */}
+          {relatedProducts.length > 0 && (
+            <div className="mt-24">
+              <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-8">You May Also Like</h2>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5 lg:gap-6">
+                {relatedProducts.map(relatedProduct => (
+                  <ProductCard key={relatedProduct.id} product={relatedProduct} />
+                ))}
+              </div>
+            </div>
+          )}
         </div>
 
         <Footer />
