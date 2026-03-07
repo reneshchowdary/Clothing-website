@@ -3,7 +3,7 @@
 /* Base styles */
 @layer base {
   body {
-    @apply bg-secondary text-neutral-800 antialiased;
+    @apply bg-neutral-50 text-neutral-800 antialiased;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -52,7 +52,7 @@
   }
 
   .product-card:hover {
-    @apply shadow-medium;
+    @apply shadow-lg;
   }
 
   /* Price slider */
@@ -63,16 +63,19 @@
 
   .price-slider::-webkit-slider-thumb {
     -webkit-appearance: none;
-    @apply w-5 h-5 bg-primary rounded-full cursor-pointer shadow-soft;
+    @apply w-5 h-5 rounded-full cursor-pointer shadow-sm;
+    background-color: #8B4789;
     transition: all 0.2s ease;
   }
 
   .price-slider::-webkit-slider-thumb:hover {
-    @apply bg-primary-dark scale-110;
+    @apply scale-110;
+    background-color: #6B3568;
   }
 
   .price-slider::-moz-range-thumb {
-    @apply w-5 h-5 bg-primary rounded-full cursor-pointer border-0 shadow-soft;
+    @apply w-5 h-5 rounded-full cursor-pointer border-0 shadow-sm;
+    background-color: #8B4789;
   }
 
   /* Sort dropdown */
@@ -94,16 +97,30 @@
   }
 
   .pagination button.active {
-    @apply bg-primary text-white border-primary;
+    @apply text-white;
+    background-color: #8B4789;
+    border-color: #8B4789;
   }
 
   /* Button styles */
   .btn-primary {
-    @apply bg-primary text-white px-6 py-3 font-semibold uppercase tracking-wide hover:bg-primary-dark transition-colors;
+    @apply text-white px-6 py-3 font-semibold uppercase tracking-wide transition-colors;
+    background-color: #8B4789;
+  }
+  
+  .btn-primary:hover {
+    background-color: #6B3568;
   }
 
   .btn-secondary {
-    @apply border-2 border-primary text-primary px-6 py-3 font-semibold uppercase tracking-wide hover:bg-primary hover:text-white transition-colors;
+    @apply border-2 px-6 py-3 font-semibold uppercase tracking-wide transition-colors;
+    border-color: #8B4789;
+    color: #8B4789;
+  }
+  
+  .btn-secondary:hover {
+    background-color: #8B4789;
+    @apply text-white;
   }
 
   .btn-outline {
@@ -146,12 +163,14 @@ html {
 
 /* Focus styles */
 *:focus-visible {
-  @apply outline-2 outline-primary outline-offset-2;
+  @apply outline-2 outline-offset-2;
+  outline-color: #8B4789;
 }
 
 /* Selection styles */
 ::selection {
-  @apply bg-primary-light text-primary-dark;
+  background-color: #F5EDF5;
+  color: #6B3568;
 }
 
 /* Made with Bob */

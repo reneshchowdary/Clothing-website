@@ -54,7 +54,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 
         {/* Wishlist button */}
         <button
-          className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-full p-2.5 shadow-soft hover:shadow-medium transition-all opacity-0 group-hover:opacity-100"
+          className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-full p-2.5 shadow-sm hover:shadow-lg transition-all opacity-0 group-hover:opacity-100"
           onClick={toggleWishlist}
           aria-label="Add to wishlist"
         >

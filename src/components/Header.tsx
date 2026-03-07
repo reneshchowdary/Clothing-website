@@ -19,7 +19,7 @@ export default function Header() {
   }, [])
 
   return (
-    <header className={`header bg-white border-b border-neutral-200 ${isSticky ? 'sticky top-0 z-50 shadow-soft' : ''}`}>
+    <header className={`header bg-white border-b border-neutral-200 ${isSticky ? 'sticky top-0 z-50 shadow-sm' : ''}`}>
       <div className="container mx-auto px-6 lg:px-8 py-5">
         <div className="flex justify-between items-center">
           {/* Logo */}

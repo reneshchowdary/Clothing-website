@@ -38,7 +38,7 @@ export default function DressesCollection() {
 
             {/* Mobile filter button */}
             <div className="lg:hidden">
-              <button className="flex items-center justify-between w-full bg-white border border-neutral-300 py-3 px-5 text-sm font-bold text-neutral-900 uppercase tracking-wider hover:bg-neutral-50 transition-colors rounded shadow-soft">
+              <button className="flex items-center justify-between w-full bg-white border border-neutral-300 py-3 px-5 text-sm font-bold text-neutral-900 uppercase tracking-wider hover:bg-neutral-50 transition-colors rounded shadow-sm">
                 <span>Filter & Sort</span>
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293.707L3.293 17.293A1 1 0 013 17V4z" />

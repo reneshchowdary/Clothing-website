@@ -37,7 +37,7 @@ export default function Home() {
               <div className="flex flex-wrap gap-4">
                 <Link
                   href="/collections/new"
-                  className="bg-primary text-white px-8 py-4 font-bold uppercase tracking-wider hover:bg-primary-dark transition-colors rounded shadow-soft hover:shadow-medium"
+                  className="bg-primary text-white px-8 py-4 font-bold uppercase tracking-wider hover:bg-primary-dark transition-colors rounded shadow-sm hover:shadow-lg"
                 >
                   Shop New Arrivals
                 </Link>
@@ -59,7 +59,7 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               <Link
                 href="/collections/dresses"
-                className="group relative overflow-hidden bg-neutral-100 aspect-[3/4] hover:shadow-strong transition-all rounded-lg"
+                className="group relative overflow-hidden bg-neutral-100 aspect-[3/4] hover:shadow-xl transition-all rounded-lg"
               >
                 <img
                   src="/images/products/dress1.jpg"
@@ -76,7 +76,7 @@ export default function Home() {
 
               <Link
                 href="/collections/new"
-                className="group relative overflow-hidden bg-neutral-100 aspect-[3/4] hover:shadow-strong transition-all rounded-lg"
+                className="group relative overflow-hidden bg-neutral-100 aspect-[3/4] hover:shadow-xl transition-all rounded-lg"
               >
                 <img
                   src="/images/products/dress2.jpg"
@@ -93,7 +93,7 @@ export default function Home() {
 
               <Link
                 href="/collections/ethnic"
-                className="group relative overflow-hidden bg-neutral-100 aspect-[3/4] hover:shadow-strong transition-all rounded-lg"
+                className="group relative overflow-hidden bg-neutral-100 aspect-[3/4] hover:shadow-xl transition-all rounded-lg"
               >
                 <img
                   src="/images/products/dress8.jpg"
@@ -110,7 +110,7 @@ export default function Home() {
 
               <Link
                 href="/collections/sale"
-                className="group relative overflow-hidden bg-neutral-100 aspect-[3/4] hover:shadow-strong transition-all rounded-lg"
+                className="group relative overflow-hidden bg-neutral-100 aspect-[3/4] hover:shadow-xl transition-all rounded-lg"
               >
                 <img
                   src="/images/products/dress4.jpg"
@@ -145,7 +145,7 @@ export default function Home() {
             <div className="text-center mt-16">
               <Link
                 href="/collections/dresses"
-                className="inline-block bg-primary text-white px-10 py-4 font-bold uppercase tracking-wider hover:bg-primary-dark transition-colors rounded shadow-soft hover:shadow-medium"
+                className="inline-block bg-primary text-white px-10 py-4 font-bold uppercase tracking-wider hover:bg-primary-dark transition-colors rounded shadow-sm hover:shadow-lg"
               >
                 View All Products
               </Link>
@@ -166,7 +166,7 @@ export default function Home() {
                 placeholder="Your email address"
                 className="flex-1 px-5 py-4 text-neutral-900 rounded focus:outline-none focus:ring-2 focus:ring-white"
               />
-              <button className="bg-white text-primary px-8 py-4 font-bold uppercase tracking-wider hover:bg-neutral-100 transition-colors whitespace-nowrap rounded shadow-soft">
+              <button className="bg-white text-primary px-8 py-4 font-bold uppercase tracking-wider hover:bg-neutral-100 transition-colors whitespace-nowrap rounded shadow-sm">
                 Subscribe
               </button>
             </div>
