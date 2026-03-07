@@ -1,107 +1,142 @@
 @import "tailwindcss";
 
-/* Custom styles */
+/* Base styles */
+@layer base {
+  body {
+    @apply bg-secondary text-neutral-800 antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif text-neutral-900;
+  }
+
+  h1 {
+    @apply text-4xl lg:text-5xl font-bold tracking-tight;
+  }
+
+  h2 {
+    @apply text-3xl lg:text-4xl font-bold tracking-tight;
+  }
+
+  h3 {
+    @apply text-2xl lg:text-3xl font-semibold;
+  }
+
+  h4 {
+    @apply text-xl lg:text-2xl font-semibold;
+  }
+
+  p {
+    @apply leading-relaxed;
+  }
+
+  a {
+    @apply transition-colors duration-200;
+  }
+
+  button {
+    @apply transition-all duration-200;
+  }
+}
+
+/* Custom component styles */
 @layer components {
   /* Header */
   .header {
-    transition: all 0.3s ease;
+    @apply transition-all duration-300 ease-in-out;
   }
 
   /* Product card */
   .product-card {
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    @apply transition-all duration-300 ease-out;
+  }
+
+  .product-card:hover {
+    @apply shadow-medium;
   }
 
   /* Price slider */
   .price-slider {
     -webkit-appearance: none;
-    height: 5px;
-    background: linear-gradient(to right, #e5e7eb 0%, #e5e7eb 100%);
-    border-radius: 3px;
-    outline: none;
+    @apply h-1.5 bg-neutral-200 rounded-full outline-none;
   }
 
   .price-slider::-webkit-slider-thumb {
     -webkit-appearance: none;
-    width: 18px;
-    height: 18px;
-    background: #8B1538;
-    border-radius: 50%;
-    cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    @apply w-5 h-5 bg-primary rounded-full cursor-pointer shadow-soft;
     transition: all 0.2s ease;
   }
 
   .price-slider::-webkit-slider-thumb:hover {
-    background: #6D0F2A;
-    transform: scale(1.1);
+    @apply bg-primary-dark scale-110;
   }
 
   .price-slider::-moz-range-thumb {
-    width: 18px;
-    height: 18px;
-    background: #8B1538;
-    border-radius: 50%;
-    cursor: pointer;
-    border: none;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    @apply w-5 h-5 bg-primary rounded-full cursor-pointer border-0 shadow-soft;
   }
 
   /* Sort dropdown */
   .sort-dropdown {
-    min-width: 200px;
+    @apply min-w-[200px];
   }
 
   /* Pagination */
   .pagination {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    margin-top: 48px;
+    @apply flex justify-center gap-2 mt-12;
   }
 
   .pagination button {
-    padding: 10px 16px;
-    border: 1px solid #e5e7eb;
-    background: white;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 500;
-    transition: all 0.2s ease;
+    @apply px-4 py-2.5 border border-neutral-200 bg-white rounded text-sm font-medium transition-all;
   }
 
   .pagination button:hover {
-    background: #f9fafb;
-    border-color: #d1d5db;
+    @apply bg-neutral-50 border-neutral-300;
   }
 
   .pagination button.active {
-    background: #8B1538;
-    color: white;
-    border-color: #8B1538;
+    @apply bg-primary text-white border-primary;
+  }
+
+  /* Button styles */
+  .btn-primary {
+    @apply bg-primary text-white px-6 py-3 font-semibold uppercase tracking-wide hover:bg-primary-dark transition-colors;
+  }
+
+  .btn-secondary {
+    @apply border-2 border-primary text-primary px-6 py-3 font-semibold uppercase tracking-wide hover:bg-primary hover:text-white transition-colors;
+  }
+
+  .btn-outline {
+    @apply border border-neutral-300 text-neutral-700 px-6 py-3 font-medium hover:border-neutral-400 hover:bg-neutral-50 transition-colors;
+  }
+}
+
+/* Utility styles */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .transition-smooth {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 }
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+  @apply w-2.5 h-2.5;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f3f4f6;
-  border-radius: 5px;
+  @apply bg-neutral-100 rounded;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #9ca3af;
-  border-radius: 5px;
-  transition: background 0.2s ease;
+  @apply bg-neutral-400 rounded transition-colors;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #6b7280;
+  @apply bg-neutral-500;
 }
 
 /* Smooth scrolling */
@@ -111,8 +146,12 @@ html {
 
 /* Focus styles */
 *:focus-visible {
-  outline: 2px solid #8B1538;
-  outline-offset: 2px;
+  @apply outline-2 outline-primary outline-offset-2;
+}
+
+/* Selection styles */
+::selection {
+  @apply bg-primary-light text-primary-dark;
 }
 
 /* Made with Bob */

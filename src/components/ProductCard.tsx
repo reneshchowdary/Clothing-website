@@ -40,66 +40,66 @@ export default function ProductCard({ product }: ProductCardProps) {
   }
 
   return (
-    <div className="product-card group bg-white overflow-hidden">
+    <div className="product-card group bg-white overflow-hidden rounded-lg border border-neutral-200 hover:border-neutral-300 transition-all">
       <div className="relative overflow-hidden">
         <Link href={`/product/${product.slug}`} className="block">
-          <div className="aspect-[3/4] bg-gray-50">
+          <div className="aspect-[3/4] bg-neutral-100">
             <img
               src={product.image}
               alt={product.title}
-              className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
+              className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-110"
             />
           </div>
         </Link>
 
-        {/* Wishlist button - positioned at top right */}
+        {/* Wishlist button */}
         <button
-          className="absolute top-3 right-3 bg-white rounded-full p-2 shadow-sm hover:shadow-md transition-all opacity-0 group-hover:opacity-100"
+          className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-full p-2.5 shadow-soft hover:shadow-medium transition-all opacity-0 group-hover:opacity-100"
           onClick={toggleWishlist}
           aria-label="Add to wishlist"
         >
           <FiHeart
             size={16}
             strokeWidth={2}
-            className={isWishlisted ? 'text-primary fill-current' : 'text-gray-700'}
+            className={isWishlisted ? 'text-accent fill-current' : 'text-neutral-700'}
           />
         </button>
 
-        {/* New badge - top left */}
+        {/* New badge */}
         {product.isNew && (
-          <span className="absolute top-3 left-3 bg-black text-white px-2 py-1 text-[10px] font-semibold uppercase tracking-wider">
+          <span className="absolute top-3 left-3 bg-neutral-900 text-white px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider">
             NEW
           </span>
         )}
       </div>
 
-      <div className="pt-3 pb-4">
-        <h3 className="text-sm text-gray-900 mb-1.5 line-clamp-2 leading-snug">
+      <div className="p-4">
+        <h3 className="text-sm text-neutral-900 mb-2 line-clamp-2 leading-snug font-medium">
           <Link href={`/product/${product.slug}`} className="hover:text-primary transition-colors">
             {product.title}
           </Link>
         </h3>
 
-        <div className="flex items-baseline gap-2">
-          <span className="text-base font-semibold text-gray-900">₹{product.price.toLocaleString()}</span>
+        <div className="flex items-baseline gap-2 mb-3">
+          <span className="text-base font-bold text-neutral-900">₹{product.price.toLocaleString()}</span>
           {product.originalPrice && (
             <>
-              <span className="text-sm text-gray-400 line-through">₹{product.originalPrice.toLocaleString()}</span>
-              <span className="text-xs font-semibold text-red-600">({product.discount}% OFF)</span>
+              <span className="text-sm text-neutral-400 line-through">₹{product.originalPrice.toLocaleString()}</span>
+              <span className="text-xs font-bold text-accent">-{product.discount}%</span>
             </>
           )}
         </div>
 
-        {/* Add to Cart Button - Always visible */}
+        {/* Add to Cart Button */}
         {showSizeSelector ? (
-          <div className="mt-3 space-y-2">
-            <p className="text-xs font-semibold text-gray-700 mb-1">Select Size:</p>
+          <div className="space-y-2">
+            <p className="text-xs font-semibold text-neutral-700 mb-2">Select Size:</p>
             <div className="flex flex-wrap gap-2">
               {product.sizes.map(size => (
                 <button
                   key={size}
                   onClick={(e) => handleAddToCart(e, size)}
-                  className="px-3 py-1.5 border border-gray-300 hover:border-primary hover:bg-primary hover:text-white text-xs font-medium transition-colors"
+                  className="px-3 py-1.5 border border-neutral-300 hover:border-primary hover:bg-primary hover:text-white text-xs font-semibold transition-colors rounded"
                 >
                   {size}
                 </button>
@@ -107,7 +107,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             </div>
             <button
               onClick={() => setShowSizeSelector(false)}
-              className="text-xs text-gray-500 hover:text-gray-700 underline"
+              className="text-xs text-neutral-500 hover:text-neutral-700 underline"
             >
               Cancel
             </button>
@@ -115,9 +115,9 @@ export default function ProductCard({ product }: ProductCardProps) {
         ) : (
           <button
             onClick={handleAddToCart}
-            className="mt-3 w-full bg-primary text-white py-2.5 text-sm font-semibold uppercase tracking-wide hover:bg-primary-dark transition-colors flex items-center justify-center gap-2"
+            className="w-full bg-primary text-white py-2.5 text-xs font-bold uppercase tracking-wider hover:bg-primary-dark transition-colors flex items-center justify-center gap-2 rounded"
           >
-            <FiShoppingBag size={16} />
+            <FiShoppingBag size={14} />
             Add to Cart
           </button>
         )}

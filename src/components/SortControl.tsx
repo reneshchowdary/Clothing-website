@@ -22,25 +22,25 @@ export default function SortControl() {
       <div>
         <button
           type="button"
-          className="inline-flex justify-center items-center w-48 rounded-sm border border-gray-300 shadow-sm px-3 py-2 bg-white text-xs font-medium text-gray-700 uppercase tracking-wider hover:bg-gray-50 focus:outline-none"
+          className="inline-flex justify-center items-center w-52 rounded border border-neutral-300 shadow-soft px-4 py-2.5 bg-white text-xs font-semibold text-neutral-700 uppercase tracking-wider hover:bg-neutral-50 hover:border-neutral-400 focus:outline-none transition-colors"
           onClick={() => setIsOpen(!isOpen)}
         >
           {selectedOption.label}
-          {isOpen ? <FiChevronUp className="ml-2" /> : <FiChevronDown className="ml-2" />}
+          {isOpen ? <FiChevronUp className="ml-2 text-neutral-500" size={14} /> : <FiChevronDown className="ml-2 text-neutral-500" size={14} />}
         </button>
       </div>
 
       {isOpen && (
-        <div className="origin-top-right absolute right-0 mt-1 w-48 rounded-sm shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10">
+        <div className="origin-top-right absolute right-0 mt-2 w-52 rounded shadow-medium bg-white border border-neutral-200 z-10">
           <div className="py-1" role="none">
             {sortOptions.map(option => (
               <button
                 key={option.value}
                 className={`${
                   selectedOption.value === option.value
-                    ? 'bg-gray-100 text-gray-900'
-                    : 'text-gray-700'
-                } block w-full text-left px-3 py-1.5 text-xs uppercase tracking-wider hover:bg-gray-100`}
+                    ? 'bg-primary-light text-primary font-bold'
+                    : 'text-neutral-700 font-medium'
+                } block w-full text-left px-4 py-2.5 text-xs uppercase tracking-wider hover:bg-neutral-50 transition-colors`}
                 role="menuitem"
                 onClick={() => handleOptionClick(option)}
               >

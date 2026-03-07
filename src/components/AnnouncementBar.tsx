@@ -1,11 +1,9 @@
 import { useState, useEffect } from 'react'
 
 const announcements = [
-  "BUY FOR ₹2499 & MORE, GET FLAT ₹100 OFF | USE CODE: SALE100",
-  "BUY FOR ₹2899 & MORE, GET FLAT ₹200 OFF | USE CODE: SALE200",
-  "FREE SHIPPING ON ORDERS ABOVE ₹999",
-  "NEW ARRIVALS - SHOP THE LATEST COLLECTION",
-  "EASY RETURNS & EXCHANGES WITHIN 15 DAYS"
+  "Free Shipping on Orders Above ₹999",
+  "New Arrivals • Shop the Latest Collection",
+  "Easy Returns Within 15 Days"
 ]
 
 export default function AnnouncementBar() {
@@ -20,13 +18,13 @@ export default function AnnouncementBar() {
   }, [])
 
   return (
-    <div className="bg-gray-900 text-white py-2 text-center overflow-hidden">
+    <div className="bg-neutral-900 text-white py-2.5 text-center overflow-hidden">
       <div className="container mx-auto px-6">
         <div className="relative h-5">
           {announcements.map((announcement, index) => (
             <div
               key={index}
-              className={`absolute inset-0 flex items-center justify-center transition-all duration-500 text-xs font-medium tracking-wide ${
+              className={`absolute inset-0 flex items-center justify-center transition-all duration-500 text-xs font-medium tracking-wider ${
                 index === currentIndex
                   ? 'opacity-100 translate-y-0'
                   : 'opacity-0 translate-y-2'

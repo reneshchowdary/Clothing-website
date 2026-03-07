@@ -21,29 +21,29 @@ function FilterGroup({ title, options, isOpen, onToggle }: FilterGroupProps) {
   }
 
   return (
-    <div className="py-4 border-b border-gray-300">
+    <div className="py-5 border-b border-neutral-200">
       <button
-        className="flex justify-between items-center w-full text-xs font-semibold text-gray-900 uppercase tracking-wider hover:text-primary transition-colors"
+        className="flex justify-between items-center w-full text-xs font-bold text-neutral-900 uppercase tracking-wider hover:text-primary transition-colors"
         onClick={onToggle}
       >
         <span>{title}</span>
-        {isOpen ? <FiChevronUp className="text-gray-600" size={16} /> : <FiChevronDown className="text-gray-600" size={16} />}
+        {isOpen ? <FiChevronUp className="text-neutral-500" size={16} /> : <FiChevronDown className="text-neutral-500" size={16} />}
       </button>
 
       {isOpen && (
-        <div className="mt-3 space-y-2.5">
+        <div className="mt-4 space-y-3">
           {options.map(option => (
-            <div key={option} className="flex items-center">
+            <div key={option} className="flex items-center group">
               <input
                 type="checkbox"
                 id={`${title.toLowerCase().replace(/\s+/g, '-')}-${option.toLowerCase().replace(/\s+/g, '-')}`}
                 checked={selectedOptions.includes(option)}
                 onChange={() => handleOptionChange(option)}
-                className="h-4 w-4 text-primary focus:ring-primary focus:ring-offset-0 border-gray-400 rounded cursor-pointer"
+                className="h-4 w-4 text-primary focus:ring-2 focus:ring-primary focus:ring-offset-0 border-neutral-300 rounded cursor-pointer transition-colors"
               />
               <label
                 htmlFor={`${title.toLowerCase().replace(/\s+/g, '-')}-${option.toLowerCase().replace(/\s+/g, '-')}`}
-                className="ml-2.5 block text-sm text-gray-700 cursor-pointer hover:text-gray-900"
+                className="ml-3 block text-sm text-neutral-600 cursor-pointer group-hover:text-neutral-900 transition-colors"
               >
                 {option}
               </label>
@@ -77,9 +77,9 @@ export default function FilterSidebar() {
   }
 
   return (
-    <div className="filter-sidebar w-full lg:w-64 bg-white border-r border-gray-200 pr-6">
-      <div className="mb-6">
-        <h2 className="text-sm font-bold text-gray-900 uppercase tracking-wider">FILTER</h2>
+    <div className="filter-sidebar w-full lg:w-72 bg-white rounded-lg border border-neutral-200 p-6">
+      <div className="mb-6 pb-4 border-b border-neutral-200">
+        <h2 className="text-sm font-bold text-neutral-900 uppercase tracking-wider">Filters</h2>
       </div>
 
       <FilterGroup
@@ -124,17 +124,17 @@ export default function FilterSidebar() {
         onToggle={() => toggleFilter('pattern')}
       />
 
-      <div className="py-4 border-b border-gray-300">
+      <div className="py-5 border-b border-neutral-200">
         <button
-          className="flex justify-between items-center w-full text-xs font-semibold text-gray-900 uppercase tracking-wider hover:text-primary transition-colors"
+          className="flex justify-between items-center w-full text-xs font-bold text-neutral-900 uppercase tracking-wider hover:text-primary transition-colors"
           onClick={() => toggleFilter('price')}
         >
           <span>PRICE</span>
-          {openFilters.price ? <FiChevronUp className="text-gray-600" size={16} /> : <FiChevronDown className="text-gray-600" size={16} />}
+          {openFilters.price ? <FiChevronUp className="text-neutral-500" size={16} /> : <FiChevronDown className="text-neutral-500" size={16} />}
         </button>
 
         {openFilters.price && (
-          <div className="mt-4">
+          <div className="mt-5">
             <input
               type="range"
               min="0"
@@ -142,7 +142,7 @@ export default function FilterSidebar() {
               step="500"
               className="price-slider w-full"
             />
-            <div className="flex justify-between text-xs text-gray-700 mt-3 font-medium">
+            <div className="flex justify-between text-xs text-neutral-600 mt-4 font-semibold">
               <span>₹0</span>
               <span>₹20,000+</span>
             </div>
